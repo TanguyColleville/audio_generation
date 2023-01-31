@@ -15,17 +15,17 @@ class AE(nn.Module):
         self.layer_5 = nn.Linear(128, 256)
         self.layer_6 = nn.Linear(256, input_size)
 
-        self.encoder = nn.sequential(self.relu(self.layer_1),
-                                     self.relu(self.layer_2),
-                                     self.layer_3,
-        )
-        self.decoder = nn.sequential(self.relu(self.layer_4),
-                                     self.relu(self.layer_5),
-                                     self.layer_6,
-        )
+        self.encoder = nn.Sequential(self.layer_1, self.relu,
+                                     self.layer_2, self.relu,
+                                     self.layer_3
+                                     )
+        self.decoder = nn.Sequential(self.layer_4, self.relu,
+                                     self.layer_5, self.relu,
+                                     self.layer_6
+                                     )
     # TODO add a method create encoder, create decoder and change attribut
 
     def forward(self, x):
         x = x.view(x.size()[0], -1)
-        latent = self.encoder()
+        latent = self.encoder(x)
         return self.decoder(latent)
